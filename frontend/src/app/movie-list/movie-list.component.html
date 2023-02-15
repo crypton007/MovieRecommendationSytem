@@ -1,0 +1,109 @@
+<!-- <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h2>Employee List</h2>
+    </div>
+    <div class="panel-body">
+      <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions">
+        <thead>
+          <tr>
+            <th>movieid</th>
+            <th>title</th>
+            <th>genre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of movies">
+            <td>{{employee.movieid}}</td>
+            <td>{{employee.title}}</td>
+            <td>{{employee.genre}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div> -->
+
+  <!-- <div class="card"> -->
+    <!-- <h5></h5>
+    <p-table [value]="movies" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
+        [rowsPerPageOptions]="[10,25,50]"> -->
+        <!-- <p-table #dt1 [value]="movies" [resizableColumns]="true" styleClass="p-datatable-gridlines" [tableStyle]="{'min-width': '50rem'}"
+
+        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" 
+
+        [paginator]="true"
+
+        [globalFilterFields]="['title']">
+
+        <ng-template pTemplate="caption">
+
+            <div class="p-d-flex">
+
+                <span class="p-input-icon-left p-ml-auto">
+
+                    <i class="pi pi-search"></i>
+
+                    <input pInputText size='50' type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
+
+                </span>
+
+            </div>
+
+        </ng-template>  
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Movie Id</th>
+                <th>Title</th>
+                <th>Genre</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-movie>
+            <tr>
+                <td>{{movie.id}}</td>
+                <td>{{movie.title}}</td>
+                <td>{{movie.genre}}</td>
+            </tr>
+        </ng-template>
+    </p-table> -->
+<!-- </div> -->
+
+<div class="container-fluid">
+  <div class="table table-striped">
+    <form class="d-flex mt-3" (submit)="searchByTitle(title)">
+      <input class="form-control me-2" type="search" #title placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-primary" type="submit">Search</button>
+    </form>
+    <p-table #dt1 [value]="movies" [responsive]="true" [scrollable]="true" 
+       [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" 
+       [paginator]="true"
+       [globalFilterFields]="['title']">
+       <!-- <caption>Movie List</caption> -->
+       <ng-template pTemplate="header">
+        
+        <!-- <caption class="py-0">
+          <span class="p-input-icon-right float-end p-2 pb-0">
+            <i class="pi pi-search"></i>
+            <input pInputText size='50' type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
+          </span>
+        </caption> -->
+        <tr>
+            <th class="table-heading" p-col [ngStyle]="{'width':'10%'}" pSortableColumn="movieid">Movie Id</th>
+            <th class="table-heading" p-col [ngStyle]="{'width':'40%'}" pSortableColumn="title">Title</th>
+            <th class="table-heading" p-col [ngStyle]="{'width':'40%'}" pSortableColumn="genre">Genre</th>
+        </tr>
+    </ng-template>
+    
+      <ng-template pTemplate="body" let-movie>
+          <tr>
+              <td>{{movie.movieid}}</td>
+              <td>{{movie.title}}</td>
+              <td>{{movie.genre}}</td>
+          </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+
+
+
+

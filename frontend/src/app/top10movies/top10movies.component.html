@@ -1,0 +1,79 @@
+<div class="container-fluid" style="margin-bottom: 1.7rem;">
+    <div class="float-end" style="
+    padding-right: 1.3rem;">
+    <form class="d-flex mt-3" (submit)="search(selectedGenres)">
+        <select multiple class="form-control me-2" [(ngModel)]="selectedGenres" name="genres" size="2">
+          <option *ngFor="let genre of genres" [value]="genre">{{ genre }}</option>
+        </select>
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+      </form>
+      
+      
+      
+        <!-- <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input class="form-control" type="text" #genre pInputText placeholder="Search" />
+        </span>
+        <button class="btn btn-primary" (click)="search(genre)">Search</button> -->
+    </div>
+    <h1 class="pt-2" style="padding-left: 1.3rem;">Top 10 Movies by Genres</h1>
+
+    <div class="container-fluid" style="margin-top:1.3rem">
+        <div class="table table-striped">
+          <p-table #dt1 [value]="top10movies" [responsive]="true" [scrollable]="true" 
+             [rows]="10" 
+             [globalFilterFields]="['title']">
+             <!-- <caption>Movie List</caption> -->
+             <ng-template pTemplate="header">
+              <tr>
+                
+                <th class="table-heading" p-col [ngStyle]="{'width':'10%'}" pSortableColumn="id">Rank</th>
+                <th class="table-heading" p-col [ngStyle]="{'width':'40%'}" pSortableColumn="title">Title</th>
+                <th class="table-heading" p-col [ngStyle]="{'width':'35%'}" pSortableColumn="genre">Genre</th>
+                <th class="table-heading" p-col [ngStyle]="{'width':'15%'}" pSortableColumn="genre">Weighted Rating</th>
+              </tr>
+          </ng-template>
+          
+            <ng-template pTemplate="body" let-movie let-rowindex="rowIndex">
+                <tr>
+
+                    <td>{{rowindex+1}}</td>
+                    <td>{{movie.title}}</td>
+                    <td>{{movie.genre}}</td>
+                    <td>{{movie.weightedrating}}</td>
+                </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+
+
+
+    <!-- <p-table #dt1 [value]="top10movies" [resizableColumns]="true" styleClass="p-datatable-gridlines" [tableStyle]="{'min-width': '50rem'}"
+    
+            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" 
+    
+            [paginator]="true"
+    
+            [globalFilterFields]="['title']">
+    
+            
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="table-heading" p-col [ngStyle]="{'width':'10%'}" pSortableColumn="id">Movie Id</th>
+                    <th class="table-heading" p-col [ngStyle]="{'width':'40%'}" pSortableColumn="title">Title</th>
+                    <th class="table-heading" p-col [ngStyle]="{'width':'40%'}" pSortableColumn="genre">Genre</th>
+                    <th class="table-heading" p-col [ngStyle]="{'width':'10%'}" pSortableColumn="genre">Weighted Rating</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-movie>
+                <tr>
+                    <td>{{movie.movieid}}</td>
+                    <td>{{movie.title}}</td>
+                    <td>{{movie.genre}}</td>
+                    <td>{{movie.weightedrating}}</td>
+                </tr>
+            </ng-template>
+        </p-table> -->
+</div>
+
