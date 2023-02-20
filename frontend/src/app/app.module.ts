@@ -13,13 +13,17 @@ import { Top10moviesComponent } from './top10movies/top10movies.component';
 import { HeaderComponent } from './header/header.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { UserrecoomendationComponent } from './userrecoomendation/userrecoomendation.component';
+import { SimilaruserComponent } from './similaruser/similaruser.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MovieListComponent,
     Top10moviesComponent,
-    HeaderComponent
+    HeaderComponent,
+    UserrecoomendationComponent,
+    SimilaruserComponent
   ],
   imports: [
     BrowserModule,

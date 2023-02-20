@@ -1,0 +1,21 @@
+<div class="container">
+    <h1>Similar Users</h1>
+    <form class="d-flex mt-3" (submit)="searchByUserid(userid)">
+        <input class="form-control me-2" type="search" #userid placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+      </form>
+    <table *ngIf="users">
+      <thead>
+        <tr>
+          <th>Serial Number</th>
+          <th>User ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let recommendation of users | keyvalue; let i=index">
+          <td>{{ i+1 }}</td>
+          <td>{{ recommendation.value }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

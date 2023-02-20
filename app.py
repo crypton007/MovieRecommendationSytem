@@ -4,6 +4,8 @@ from database import db
 from model.movies import movies
 from sqlalchemy import text
 from model.models import Genre,moviesRatingsModel
+from model.userRecommendations import UserRecommendations
+from model.similarUsers import SimilarUsers
 from sqlalchemy.orm import joinedload
 import pickle
 import redis
@@ -76,21 +78,21 @@ def searchByTitle():
 #     genres = genre_string.split(',')
 #     return "Top movies in the genres: " + str(genres)
 
-# @app.route('/genre',methods=['GET'])
-# @cross_origin()
-# def getAllGenre():
-#     allGenre = Genre.query.all()
-#     return jsonify([{'genre': genre.genre} for genre in allGenre])
+@app.route('/genre',methods=['GET'])
+@cross_origin()
+def getAllGenre():
+    allGenre = Genre.query.all()
+    return jsonify([{'genre': genre.genre} for genre in allGenre])
 
 @app.route("/topmovies", methods=["GET"])
 @cross_origin()
 def get_movies_by_genre():
     genre = request.args.get("genre")
     if not genre:
-        movieList = moviesRatingsModel.query.filter().options(joinedload(moviesRatingsModel.genres)).order_by(moviesRatingsModel.weightedrating.desc()).limit(10).all()
+        movieList = moviesRatingsModel.query.filter().options(joinedload(moviesRatingsModel.genresrel)).order_by(moviesRatingsModel.weightedrating.desc()).limit(10).all()
     else:
         genre = tuple(genre.split(','))
-        movieList = moviesRatingsModel.query.filter(moviesRatingsModel.genres.any(Genre.genre.in_(genre))).options(joinedload(moviesRatingsModel.genres)).order_by(moviesRatingsModel.weightedrating.desc()).limit(10).all()
+        movieList = moviesRatingsModel.query.filter(moviesRatingsModel.genresrel.any(Genre.genre.in_(genre))).options(joinedload(moviesRatingsModel.genresrel)).order_by(moviesRatingsModel.weightedrating.desc()).limit(10).all()
 
     return jsonify([{'movieid': m.movieid, 'title': m.title, 'weightedrating': m.weightedrating, 'genre':m.genre} for m in movieList])
     # genre_list = genre.split(",")
@@ -108,3 +110,47 @@ def get_movies_by_genre():
     # return the result in JSON format
     # return jsonify(movie_ids)
 
+
+    
+@app.route("/recommendations", methods=["GET"])
+@cross_origin()
+def get_movie_recommendations():
+    userid = request.args.get("userid")
+    result = UserRecommendations.query.filter_by(userid=userid).first()
+    if result:
+        return jsonify({
+            'recommendation_1': result.recommendation_1,
+            'recommendation_2': result.recommendation_2,
+            'recommendation_3': result.recommendation_3,
+            'recommendation_4': result.recommendation_4,
+            'recommendation_5': result.recommendation_5,
+            'recommendation_6': result.recommendation_6,
+            'recommendation_7': result.recommendation_7,
+            'recommendation_8': result.recommendation_8,
+            'recommendation_9': result.recommendation_9,
+            'recommendation_10': result.recommendation_10
+        })
+    else:
+        return jsonify({'message': 'No recommendations found for user {}'.format(userid)}), 404
+
+
+@app.route("/similaruserids", methods=["GET"])
+@cross_origin()
+def get_movie_similaruserids():
+    userid = request.args.get("userid")
+    result = SimilarUsers.query.filter_by(userid=userid).first()
+    if result:
+        return jsonify({
+            'similaruserid_1': result.similaruserid_1,
+            'similaruserid_2': result.similaruserid_2,
+            'similaruserid_3': result.similaruserid_3,
+            'similaruserid_4': result.similaruserid_4,
+            'similaruserid_5': result.similaruserid_5,
+            'similaruserid_6': result.similaruserid_6,
+            'similaruserid_7': result.similaruserid_7,
+            'similaruserid_8': result.similaruserid_8,
+            'similaruserid_9': result.similaruserid_9,
+            'similaruserid_10': result.similaruserid_10
+        })
+    else:
+        return jsonify({'message': 'No similaruserids found for user {}'.format(userid)}), 404

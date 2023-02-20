@@ -13,13 +13,13 @@ class moviesRatingsModel(db.Model):
     __mapper_args__ =   {
                         'primary_key' :[moviesRatings.columns.movieid], 
                         }
-    genres = db.relationship("Genre",secondary=MovieGenres, back_populates="movies")
+    genresrel = db.relationship("Genre",secondary=MovieGenres, back_populates="movies")
 
 
 class Genre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     genre = db.Column(db.String())
-    movies = db.relationship("moviesRatingsModel",secondary=MovieGenres, back_populates="genres")
+    movies = db.relationship("moviesRatingsModel",secondary=MovieGenres, back_populates="genresrel")
     
     def __init__(self,id,genre):
         self.id = id
