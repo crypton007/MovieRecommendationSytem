@@ -1,21 +1,19 @@
 <div class="container">
     <h1>Similar Users</h1>
     <form class="d-flex mt-3" (submit)="searchByUserid(userid)">
-        <input class="form-control me-2" type="search" #userid placeholder="Search" aria-label="Search">
+        <input class="form-control me-2" type="search" #userid placeholder="Search user id" aria-label="Search">
         <button class="btn btn-outline-primary" type="submit">Search</button>
       </form>
-    <table *ngIf="users">
-      <thead>
-        <tr>
-          <th>Serial Number</th>
-          <th>User ID</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let recommendation of users | keyvalue; let i=index">
-          <td>{{ i+1 }}</td>
-          <td>{{ recommendation.value }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <p-table *ngIf="users" [value]="users | keyvalue" [rows]="10" styleClass="p-datatable-gridlines" class="custom-table">
+        <ng-template pTemplate="header">
+            <!-- <th class="table-heading" p-col [ngStyle]="{'width':'10%'}" pSortableColumn="id">Row </th> -->
+            <th class="table-heading" p-col [ngStyle]="{'width':'80%'}" pSortableColumn="id">User ids similar to above user</th>
+        </ng-template>
+        <ng-template pTemplate="body" let-recommendations let-rowindex="rowIndex">
+          <tr>
+            <!-- <td>{{rowindex+1}}</td> -->
+            <td>{{ recommendations.value }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
   </div>
